@@ -40,7 +40,7 @@ public class QuoteReactionListener implements ReactionAddListener {
 
             if (reactionAddEvent.getEmoji().asUnicodeEmoji().get().equals(quoteConfig.quoteEmoji)) {
                 Message message = reactionAddEvent.requestMessage().get();
-                quoteManager.saveQuote(message, reactionAddEvent.getUser());
+                quoteManager.saveQuote(message, reactionAddEvent.getUser().get());
                 message.addReaction(quoteConfig.confirmationEmoji);
             } else if (reactionAddEvent.getEmoji().asUnicodeEmoji().get().equals(quoteConfig.deleteQuoteEmoji)) {
                 if (reactionAddEvent.getReaction().get().getCount() >= quoteConfig.deleteQuoteCount) {

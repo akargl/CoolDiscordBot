@@ -76,11 +76,11 @@ public class PressfCommand extends Command {
             firstMessage.addReaction(RESPECT_EMOJI);
 
             firstMessage.addReactionAddListener(reactionAddEvent -> {
-                if (reactionAddEvent.getEmoji().equalsEmoji(RESPECT_EMOJI) && !reactionAddEvent.getUser().isYourself()) {
+                if (reactionAddEvent.getEmoji().equalsEmoji(RESPECT_EMOJI) && !reactionAddEvent.getUser().get().isYourself()) {
                     try {
                         Message userReactedMessage = reactionAddEvent.getChannel().sendMessage(
-                                String.format(PAID_RESPECT_MSG, reactionAddEvent.getUser().getDisplayName(reactionAddEvent.getServer().get()), reasonWithoutMentions)).get();
-                        pressfManager.getActiveRespects().get(firstMessageId).put(reactionAddEvent.getUser().getId(), userReactedMessage);
+                                String.format(PAID_RESPECT_MSG, reactionAddEvent.getUser().get().getDisplayName(reactionAddEvent.getServer().get()), reasonWithoutMentions)).get();
+                        pressfManager.getActiveRespects().get(firstMessageId).put(reactionAddEvent.getUser().get().getId(), userReactedMessage);
                     } catch (InterruptedException | ExecutionException e) {
                         e.printStackTrace();
                     }
@@ -88,8 +88,8 @@ public class PressfCommand extends Command {
             }).removeAfter(PRESSF_DURATION_S, TimeUnit.SECONDS);
 
             firstMessage.addReactionRemoveListener(reactionRemoveEvent -> {
-                if (reactionRemoveEvent.getEmoji().equalsEmoji(RESPECT_EMOJI) && !reactionRemoveEvent.getUser().isYourself()) {
-                    Message userReactedMessage = pressfManager.getActiveRespects().get(firstMessageId).remove(reactionRemoveEvent.getUser().getId());
+                if (reactionRemoveEvent.getEmoji().equalsEmoji(RESPECT_EMOJI) && !reactionRemoveEvent.getUser().get().isYourself()) {
+                    Message userReactedMessage = pressfManager.getActiveRespects().get(firstMessageId).remove(reactionRemoveEvent.getUser().get().getId());
                     userReactedMessage.delete("User removed pressF reaction");
                 }
             }).removeAfter(PRESSF_DURATION_S, TimeUnit.SECONDS);
